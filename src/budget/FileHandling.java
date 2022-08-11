@@ -2,7 +2,6 @@ package budget;
 
 import budget.enums.PurchaseActions;
 
-import javax.swing.plaf.synth.SynthRadioButtonMenuItemUI;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -49,18 +48,17 @@ public class FileHandling {
 
     /**
      * Load the data from the file
-     * @param data data object
+     *
+     * @param data     data object
      * @param filePath filepath of the file were we retrieve the data
-     * @return return the data object created from the file
      */
-    static Data load(Data data, String filePath) {
+    static void load(Data data, String filePath) {
         File file = new File(filePath);
         try (Scanner scanner = new Scanner(file)) {
             read(data, scanner);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
-        return data;
     }
 
     /**

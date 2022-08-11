@@ -26,33 +26,23 @@ final class InOut {
             int input = inputInt(0, Actions.values().length + 1);
             System.out.println();
             switch (input) {
-                case 1:
-                    inputIncome(data);
-                    break;
-                case 2:
-                    playMenuAddPurchase(data);
-                    break;
-                case 3:
-                    playMenuShowPurchase(data);
-                    break;
-                case 4:
-                    printBalance(data);
-                    break;
-                case 5:
+                case 1 -> inputIncome(data);
+                case 2 -> playMenuAddPurchase(data);
+                case 3 -> playMenuShowPurchase(data);
+                case 4 -> printBalance(data);
+                case 5 -> {
                     FileHandling.save(data, "purchases.txt");
                     System.out.println("Purchases were saved!");
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     FileHandling.load(data, "purchases.txt");
                     System.out.println("Purchases were loaded!");
-                    break;
-                case 7:
-                    playSortingMenu(data);
-                    break;
-                case 0:
+                }
+                case 7 -> playSortingMenu(data);
+                case 0 -> {
                     System.out.println("Bye!");
                     check = false;
-                    break;
+                }
             }
             System.out.println();
         }
@@ -277,7 +267,7 @@ final class InOut {
             Context context = new Context();
             List<PurchaseData> list;
             switch (input) {
-                case 1:
+                case 1 -> {
                     context.setSortingStrategy(new ConcreteSortAll());
                     list = context.sort(data);
                     if (list.isEmpty()) {
@@ -285,14 +275,14 @@ final class InOut {
                     } else {
                         list.forEach((PD) -> System.out.println(PD.toString()));
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     context.setSortingStrategy(new ConcreteSortByType());
                     list = context.sort(data);
                     System.out.println("Types:");
-                    list.forEach((PD) -> System.out.println(PD.label() + " - $" + String.format("%.2f", PD.amount() )));
-                    break;
-                case 3:
+                    list.forEach((PD) -> System.out.println(PD.label() + " - $" + String.format("%.2f", PD.amount())));
+                }
+                case 3 -> {
                     printCategoriePurchaseMenu();
                     int ordinal = inputInt(1, PurchaseActions.values().length + 2) - 1;
                     context.setSortingStrategy(new ConcreteSortCertainType());
@@ -303,10 +293,8 @@ final class InOut {
                     } else {
                         list.forEach((PD) -> System.out.println(PD.toString()));
                     }
-                    break;
-                default:
-                    check = false;
-
+                }
+                default -> check = false;
             }
             System.out.println();
         }
