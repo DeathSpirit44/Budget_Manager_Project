@@ -8,7 +8,15 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+/**
+ * Static class that handle the save to a file process
+ */
 public class FileHandling {
+    /**
+     * Save the data of the data object to a file
+     * @param data data object
+     * @param filePath filepath of the file where we store the data
+     */
     static void save(Data data, String filePath) {
         File file = new File(filePath);
         try (PrintWriter printWriter = new PrintWriter(file)) {
@@ -18,6 +26,11 @@ public class FileHandling {
         }
     }
 
+    /**
+     * Write all the data from the data object to the file
+     * @param data data object
+     * @param printWriter PrintWriter object of the file where we store data
+     */
     private static void writeFile(Data data, PrintWriter printWriter) {
         printWriter.println(data.getBalance());
         printWriter.println(data.getTotalPurchasesAmount());
@@ -34,6 +47,12 @@ public class FileHandling {
         printWriter.println("EOF"); //End of file marker
     }
 
+    /**
+     * Load the data from the file
+     * @param data data object
+     * @param filePath filepath of the file were we retrieve the data
+     * @return return the data object created from the file
+     */
     static Data load(Data data, String filePath) {
         File file = new File(filePath);
         try (Scanner scanner = new Scanner(file)) {
@@ -44,6 +63,11 @@ public class FileHandling {
         return data;
     }
 
+    /**
+     * read the file and add the data from the file to the data object
+     * @param data data object
+     * @param scanner scanner object of the file were we retieve the data
+     */
     static private void read(Data data, Scanner scanner) {
         if (scanner.hasNextLine()) {
             data.setBalance(scanner.nextDouble());

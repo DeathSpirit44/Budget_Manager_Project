@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class representing all the data associated to the budget manager and therefore purchases, income, etc...
+ */
 public class Data {
     private final Map<Integer, Double> amountMap = new HashMap<>(); // Les clés sont hachés par l'ordinal de l'énum purchase actions
     private final Map<Integer, List<PurchaseData>> purchaseMap = new HashMap<>();
@@ -50,10 +53,10 @@ public class Data {
     }
 
     /**
-     * add a purchase to data
-     *
-     * @param name  name of the purchase
-     * @param value value of the purchase
+     * method that add a purchase in the system
+     * @param ordinal the ordinal of the categorie from PurchaseAction enum
+     * @param name the name of the purchase
+     * @param value the amount of the purchase
      */
     void addPurchase(Integer ordinal, String name, double value) {
         amountMap.put(ordinal, amountMap.get(ordinal) + value);

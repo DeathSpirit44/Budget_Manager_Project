@@ -4,22 +4,19 @@ package budget;
 import budget.enums.Actions;
 import budget.enums.PurchaseActions;
 import budget.enums.SortingActions;
-import budget.sort_strategy_pattern.ConcreteSortAll;
-import budget.sort_strategy_pattern.ConcreteSortByType;
-import budget.sort_strategy_pattern.ConcreteSortCertainType;
-import budget.sort_strategy_pattern.SortingStrategy;
+import budget.sort_strategy_pattern.*;
 
-import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 
 
-
+/**
+ * Static class that handles all interactions between the program and the user
+ */
 final class InOut {
 
     /**
      * Play the menu and collects info that are stored in data
-     *
      * @param data Data object
      */
     static void playMenu(Data data) {
@@ -62,6 +59,10 @@ final class InOut {
         while (check);
     }
 
+    /**
+     * Play the menu that shows the purchases
+     * @param data data object
+     */
     static private void playMenuShowPurchase(Data data) {
         boolean check = true;
         do {
@@ -80,6 +81,10 @@ final class InOut {
         } while (check);
     }
 
+    /**
+     * play the menu that add the purchases to certain categories
+     * @param data data object
+     */
     static private void playMenuAddPurchase(Data data) {
         boolean check = true;
         do {
@@ -97,7 +102,7 @@ final class InOut {
     }
 
     /**
-     * Print the budgetmanager menu
+     * Print the main menu
      */
     private static void printMenu() {
         System.out.println("Choose your action :");
@@ -109,7 +114,6 @@ final class InOut {
 
     /**
      * Ask user for an input until input is higher or equal than lower and lower dans upper
-     *
      * @return a valid positive integer
      */
     static private int inputInt(int lower, int upper) {
@@ -128,6 +132,10 @@ final class InOut {
         }
     }
 
+    /**
+     * Ask the user to input as positive double
+     * @return return valid positive double
+     */
     static private double inputPosDouble() {
         Scanner scanner = new Scanner(System.in);
         if (scanner.hasNextDouble()) {
@@ -146,7 +154,6 @@ final class InOut {
 
     /**
      * Ask user for an input income and add this income into data
-     *
      * @param data Data object representing the data of the budget manager
      */
     static private void inputIncome(Data data) {
@@ -158,13 +165,17 @@ final class InOut {
 
     /**
      * Print the balance
-     *
      * @param data Data object representing the data of the budget manager
      */
     static private void printBalance(Data data) {
         System.out.println("Balance: $" + data.getBalance());
     }
 
+    /**
+     * Print all the purchases of a categorie
+     * @param data data object
+     * @param ordinal ordinal of the categorie
+     */
     static private void printListOfPurchases(Data data, Integer ordinal) {
         System.out.println(PurchaseActions.values()[ordinal].value +":");
         if (data.getPurchaseMap().get(ordinal).isEmpty()) {
@@ -175,6 +186,10 @@ final class InOut {
         }
     }
 
+    /**
+     * print all the purchases
+     * @param data data object
+     */
     static private void printAllPurchases(Data data) {
         if (data.getTotalPurchasesAmount() == 0) {
             System.out.println("The purchase list is empty");
@@ -190,7 +205,6 @@ final class InOut {
 
     /**
      * Get purchase info from user and it to data
-     *
      * @param data Data object
      */
     static private void inputPurchase(Data data, int ordinal) {
@@ -202,6 +216,9 @@ final class InOut {
         System.out.println("Purchase was added!");
     }
 
+    /**
+     * Print the add purchase menu
+     */
     static private void printAddPurchaseMenu() {
         System.out.println("Choose the type of purchases");
         for (var value :
@@ -211,6 +228,9 @@ final class InOut {
         System.out.println((PurchaseActions.values().length + 1) + ") Back");
     }
 
+    /**
+     * Print the categorie purchase menu
+     */
     static private void printCategoriePurchaseMenu() {
         System.out.println("Choose the type of purchase");
         for (var value :
@@ -220,6 +240,9 @@ final class InOut {
         System.out.println();
     }
 
+    /**
+     * print the show purchase menu
+     */
     static private void printShowPurchaseMenu() {
         System.out.println("Choose the type of purchases");
         for (var value :
@@ -230,6 +253,9 @@ final class InOut {
         System.out.println((PurchaseActions.values().length + 2) + ") Back");
     }
 
+    /**
+     * print the sorting menu
+     */
     static private void printSortingMenu() {
         System.out.println("How do you want to sort?");
         for (SortingActions SA :
@@ -238,18 +264,22 @@ final class InOut {
         }
     }
 
+    /**
+     * Play the sorting menu
+     * @param data data object
+     */
     static private void playSortingMenu(Data data) {
         boolean check = true;
         while (check) {
             printSortingMenu();
             System.out.println();
             int input = inputInt(1, SortingActions.values().length + 1);
-            SortingStrategy sortingStrategy;
+            Context context = new Context();
             List<PurchaseData> list;
             switch (input) {
                 case 1:
-                    sortingStrategy = new ConcreteSortAll();
-                    list = sortingStrategy.sort(data, -1);
+                    context.setSortingStrategy(new ConcreteSortAll());
+                    list = context.sort(data);
                     if (list.isEmpty()) {
                         System.out.println("The purchase list is empty");
                     } else {
@@ -257,16 +287,17 @@ final class InOut {
                     }
                     break;
                 case 2:
-                    sortingStrategy = new ConcreteSortByType();
-                    list = sortingStrategy.sort(data, -1);
+                    context.setSortingStrategy(new ConcreteSortByType());
+                    list = context.sort(data);
                     System.out.println("Types:");
-                    list.forEach((PD) -> System.out.println(PD.getLabel() + " - $" + String.format("%.2f", PD.getAmount() )));
+                    list.forEach((PD) -> System.out.println(PD.label() + " - $" + String.format("%.2f", PD.amount() )));
                     break;
                 case 3:
                     printCategoriePurchaseMenu();
                     int ordinal = inputInt(1, PurchaseActions.values().length + 2) - 1;
-                    sortingStrategy = new ConcreteSortCertainType();
-                    list = sortingStrategy.sort(data, ordinal);
+                    context.setSortingStrategy(new ConcreteSortCertainType());
+                    context.setOrdinal(ordinal);
+                    list = context.sort(data);
                     if (list.isEmpty()) {
                         System.out.println("The purchase list is empty");
                     } else {

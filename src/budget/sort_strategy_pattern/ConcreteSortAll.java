@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Concrete strategy for sorting all purchases
+ */
 public class ConcreteSortAll implements SortingStrategy {
     @Override
     public List<PurchaseData> sort(Data data, int ordinal) {
@@ -16,7 +19,7 @@ public class ConcreteSortAll implements SortingStrategy {
                 PurchaseActions.values()) {
             bigList.addAll(data.getPurchaseMap().get(PA.ordinal()));
         }
-        Collections.sort(bigList, Collections.reverseOrder());
+        bigList.sort(Collections.reverseOrder());
         return bigList;
     }
 }

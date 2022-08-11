@@ -1,5 +1,8 @@
 package budget.enums;
 
+/**
+ * Enumerate type representing all the action that the user can perform from the main menu
+ */
 public enum Actions {
     ADD_INCOME("Add income", 1),
     ADD_PURCHASE("Add purchase", 2),
@@ -10,7 +13,7 @@ public enum Actions {
     ANALYZE("Analyze (Sort)", 7),
     EXIT("Exit", 0);
     public final String txt;
-    public int actionNumber;
+    public final int actionNumber;
 
     Actions(String txt, int actionNumber) {
         this.txt = txt;

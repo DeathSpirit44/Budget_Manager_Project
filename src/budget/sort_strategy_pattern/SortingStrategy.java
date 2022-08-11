@@ -5,6 +5,9 @@ import budget.PurchaseData;
 
 import java.util.List;
 
+/**
+ * Interface representing the strategy for sorting in Strategy pattern
+ */
 public interface SortingStrategy {
     /**
      *

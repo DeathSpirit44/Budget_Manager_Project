@@ -5,21 +5,23 @@ import budget.PurchaseData;
 
 import java.util.List;
 
+/**
+ * Class represention the Context for the sorting Strategy pattern
+ */
 public class Context {
-    private final SortingStrategy sortingStrategy;
+    private SortingStrategy sortingStrategy;
     private int ordinal;
 
-    public Context(SortingStrategy sortingStrategy) {
+    public void setSortingStrategy(SortingStrategy sortingStrategy) {
         this.sortingStrategy = sortingStrategy;
     }
 
-    public Context(SortingStrategy sortingStrategy, int ordinal) {
-        this(sortingStrategy);
+    public void setOrdinal(int ordinal) {
         this.ordinal = ordinal;
     }
 
-    List<PurchaseData> sort(Data data) {
-       return sortingStrategy.sort(data, ordinal);
+    public List<PurchaseData> sort(Data data) {
+        return sortingStrategy.sort(data, ordinal);
     }
 
 }

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Concrete strategy for sorting purchases by categorie
+ */
 public class ConcreteSortByType implements SortingStrategy{
     @Override
     public List<PurchaseData> sort(Data data, int ordinal) {
@@ -17,7 +20,7 @@ public class ConcreteSortByType implements SortingStrategy{
             PurchaseData PD = new PurchaseData(data.getAmountMap().get(PA.ordinal()), PA.value);
             list.add(PD);
         }
-        Collections.sort(list, Collections.reverseOrder());
+        list.sort(Collections.reverseOrder());
         return list;
     }
 }
