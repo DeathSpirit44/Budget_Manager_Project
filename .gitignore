@@ -30,3 +30,7 @@ bin/
 
 ### SaveFile ###
 purchases.txt
+
+### jar ###
+./META-INF/
+META-INF/
